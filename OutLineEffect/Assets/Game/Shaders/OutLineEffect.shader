@@ -4,18 +4,18 @@ Shader "OutLineEffect/DrawEffectOutLine"
     {
         [Header(1. Base Color Option)]
         [Space]
-        _BaseColor   ("Base Color",     Color)           = (1,1,1,1)
+        _BaseColor   ("Base Color",      Color)           = (1,1,1,1)
 
         [Header(2. Painted Texture Option)]
         [Space]
-        _PaintedTex  ("Pained Texture", 2D)              = "white" {}
+        _PaintedTex  ("Painted Texture", 2D)              = "white" {}
 
         [Header(3. OutLine Option)]
         [Space]
         [MaterialToggle] 
-        _IsEnabled   ("Active",         Float)           = 0
-        _OutLineColor("OutLine Color",  Color)           = (1,1,1,1)
-        _OutLineWidth("OutLine Width",  Range(0.000, 1)) = 0.01
+        _IsEnabled   ("Actived",         Float)           = 0
+        _OutLineColor("OutLine Color",   Color)           = (1,1,1,1)
+        _OutLineWidth("OutLine Width",   Range(0.000, 1)) = 0.01
     }
     SubShader
     {
@@ -26,6 +26,7 @@ Shader "OutLineEffect/DrawEffectOutLine"
         }
 
         // [First Pass] _ Base Texture or Color Draw
+
         cull   back
         zwrite on
 
@@ -52,10 +53,11 @@ Shader "OutLineEffect/DrawEffectOutLine"
 
         void surf(Input IN, inout SurfaceOutput o)
         {
-            fixed4 baseTex = tex2D(_PaintedTex, IN.uv_PaintedTex);
-            
-            o.Emission = baseTex.rgb * _BaseColor.rgb;
-            o.Alpha    = _BaseColor.a;
+            fixed4 baseTex     = tex2D(_PaintedTex, IN.uv_PaintedTex);
+            fixed4 resultColor = baseTex * _BaseColor;
+
+            o.Emission = resultColor.rgb;
+            o.Alpha    = resultColor.a;
         }
         ENDCG
 
