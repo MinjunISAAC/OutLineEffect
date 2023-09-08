@@ -13,9 +13,9 @@ Shader "OutLineEffect/DrawOutLine"
         [Header(3. OutLine Option)]
         [Space]
         [MaterialToggle] 
-        _IsEnabled   ("Actived",         Float)           = 0
-        _OutLineColor("OutLine Color",   Color)           = (1,1,1,1)
-        _OutLineWidth("OutLine Width",   Range(0.000, 1)) = 0.01
+        _IsEnabled       ("Actived",           Float)           = 0
+        _OutLineColor    ("OutLine Color",     Color)           = (1,1,1,1)
+        _OutLineThickness("OutLine Thickness", Range(0.000, 1)) = 0.01
     }
     SubShader
     {
@@ -78,12 +78,12 @@ Shader "OutLineEffect/DrawOutLine"
         #pragma target 3.0
 
         float4 _OutLineColor;
-        float  _OutLineWidth;
+        float  _OutLineThickness;
         float  _IsEnabled;
 
         void vert(inout appdata_full v)
         {
-            v.vertex.xyz += v.normal.xyz * _OutLineWidth;
+            v.vertex.xyz += v.normal.xyz * _OutLineThickness;
         }
 
         struct Input
