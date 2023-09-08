@@ -4,7 +4,7 @@
 
 #### ⦁ 2023.09.08 부, [OutLineEffect] [DrawOutLine] 적용
 
-#### ⦁ Version 1.0 (2023.09.08)
+#### ⦁ **[OutLineEffect/DrawOutLine | Version 1.0 (2023.09.08)](https://github.com/MinjunISAAC/OutLineEffect/blob/main/OutLineEffect/Assets/Game/Shaders/DrawOutLine.shader)**
 
 ### 1. 데모 이미지
 
@@ -29,5 +29,3 @@
 - **'Painted Texture(Texture 2D)'와 Base Color(Color)를 블렌딩**하여 표현 (조건을 두어, **블렌딩의 여부를 결정**할 수 있도록)
 
 - 물체의 전면 면만 그리고 **'Stencil 기법'을 이용하여 물체의 외각을 'OutLineColor(Color)', 'OutLineThickness(Float)'을 통해서 표현**
-
-- **[OutLineEffect/DrawOutLine](https://github.com/MinjunISAAC/OutLineEffect/blob/main/OutLineEffect/Assets/Game/Shaders/DrawOutLine.shader)**
