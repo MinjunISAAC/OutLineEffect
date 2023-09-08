@@ -1,4 +1,4 @@
-Shader "OutLineEffect/DrawEffectOutLine"
+Shader "OutLineEffect/DrawOutLine"
 {
     Properties
     {
