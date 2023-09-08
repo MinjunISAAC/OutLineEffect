@@ -12,7 +12,9 @@ Shader "OutLineEffect/DrawEffectOutLine"
 
         [Header(3. OutLine Option)]
         [Space]
-        _OutLineColor("OutLine Color",  Color)           = (0,0,0,0)
+        [MaterialToggle] 
+        _IsEnabled   ("Active",         Float)           = 0
+        _OutLineColor("OutLine Color",  Color)           = (1,1,1,1)
         _OutLineWidth("OutLine Width",  Range(0.000, 1)) = 0.01
     }
     SubShader
@@ -24,7 +26,6 @@ Shader "OutLineEffect/DrawEffectOutLine"
         }
 
         // [First Pass] _ Base Texture or Color Draw
-
         cull   back
         zwrite on
 
@@ -51,7 +52,7 @@ Shader "OutLineEffect/DrawEffectOutLine"
 
         void surf(Input IN, inout SurfaceOutput o)
         {
-            fixed4 baseTex   = tex2D(_PaintedTex, IN.uv_PaintedTex);
+            fixed4 baseTex = tex2D(_PaintedTex, IN.uv_PaintedTex);
             
             o.Emission = baseTex.rgb * _BaseColor.rgb;
             o.Alpha    = _BaseColor.a;
@@ -59,7 +60,7 @@ Shader "OutLineEffect/DrawEffectOutLine"
         ENDCG
 
         // [Second Pass] _ OutLine Draw
-
+        
         cull   front
         zwrite off
 
@@ -71,11 +72,12 @@ Shader "OutLineEffect/DrawEffectOutLine"
 
         CGPROGRAM
 
-        #pragma surface surf NoLight vertex:vert noshadow noambient 
+        #pragma surface surf NoLight vertex:vert noshadow noambient alpha:blend 
         #pragma target 3.0
 
         float4 _OutLineColor;
         float  _OutLineWidth;
+        float  _IsEnabled;
 
         void vert(inout appdata_full v)
         {
@@ -84,9 +86,8 @@ Shader "OutLineEffect/DrawEffectOutLine"
 
         struct Input
         {
-            float4 color;
+            float Color;
         };
-
 
         void surf(Input IN, inout SurfaceOutput o)
         {
@@ -95,7 +96,8 @@ Shader "OutLineEffect/DrawEffectOutLine"
 
         float4 LightingNoLight(SurfaceOutput s, float3 lightDir, float atten)
         {
-            return float4(_OutLineColor.rgb, _OutLineColor.a);
+            if (_IsEnabled > 0) { return float4(_OutLineColor.rgb, _OutLineColor.a); }
+            else                { return float4(0, 0, 0, 0);                         }
         }
         ENDCG
     }
